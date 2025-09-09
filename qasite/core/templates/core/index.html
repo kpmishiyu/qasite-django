@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="jumbotron">
+    <h1 class="display-3">悬赏问题列表</h1>
+    <p class="lead">在这里找到你感兴趣的问题，或者发布一个悬赏来解决你的难题。</p>
+    </div>
+
+    <div class="mb-4">
+        <span>排序方式：</span>
+        <a href="{% url 'homepage' %}?sort=time" class="btn {% if sort_option == 'time' or not sort_option %}btn-primary{% else %}btn-outline-primary{% endif %}">
+            <i class="fa-solid fa-clock"></i> 最新发布
+        </a>
+        <a href="{% url 'homepage' %}?sort=bounty" class="btn {% if sort_option == 'bounty' %}btn-primary{% else %}btn-outline-primary{% endif %}">
+            <i class="fa-solid fa-coins"></i> 最高悬赏
+        </a>
+    </div>
+
+    
+
+    {% for question in questions %}
+        <div class="card border-primary mb-3">
+            <div class="card-header d-flex justify-content-between">
+                <span>悬赏金币: {{ question.bounty }}</span>
+                <span class="text-muted">{{ question.created_at|date:"Y-m-d H:i" }}</span>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="{% if question.image %}col-md-8{% else %}col-md-12{% endif %}">
+                        <h4 class="card-title">
+                            <a href="{% url 'question_detail' pk=question.pk %}">{{ question.title }}</a>
+                        </h4>
+                        <p class="card-text">提问者: {{ question.author.username }}</p>
+                    </div>
+                    {% if question.image %}
+                    <div class="col-md-4">
+                        <img src="{{ question.image.url }}" class="img-fluid rounded" alt="问题图片" style="max-height: 120px; object-fit: cover; width: 100%;">
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <p>目前还没有人发布问题，快来做第一个提问者吧！</p>
+    {% endfor %}
+{% endblock %}

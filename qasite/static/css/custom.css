@@ -1,0 +1,94 @@
+/* --- 字体应用 --- */
+body {
+    font-family: 'Roboto', sans-serif;
+    color: #ccc;
+    /* body 不再直接设置渐变背景，它将留给 .background-layer */
+    background-color: #0f0c29; /* 设置一个基础的深色背景，防止出现空白 */
+    min-height: 100vh; /* 确保 body 至少占满整个视口高度 */
+    margin: 0; /* 移除默认外边距 */
+    overflow-x: hidden; /* 防止横向滚动条出现 */
+    position: relative; /* 为绝对定位的背景层提供参考 */
+}
+
+/* 将所有标题和导航栏品牌文字设置为有科技感的 Exo 2 */
+h1, h2, h3, h4, h5, h6, .navbar-brand {
+    font-family: 'Exo 2', sans-serif;
+    font-weight: 700;
+    color: #e0f2f7; /* 让标题更亮一些，突出显示 */
+}
+
+/* --- 新增：背景层样式 --- */
+.background-layer {
+    position: fixed; /* 固定在视口 */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* 确保它在所有内容之下 */
+
+    /* 动态渐变背景 */
+    background: linear-gradient(45deg, #0f0c29, #302b63, #24243e);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+
+    /* 磨砂玻璃效果 */
+    backdrop-filter: blur(15px) brightness(80%); /* 增加模糊强度，并稍稍调暗 */
+    -webkit-backdrop-filter: blur(15px) brightness(80%);
+    opacity: 0.8; /* 整体透明度，让底层的深色也能透出一点 */
+}
+
+/* 定义动画保持不变 */
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* 定义动画 */
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* 将所有标题和导航栏品牌文字设置为有科技感的 Exo 2 */
+h1, h2, h3, h4, h5, h6, .navbar-brand {
+    font-family: 'Exo 2', sans-serif;
+    font-weight: 700;
+}
+
+/* --- 玻璃拟态效果 --- */
+.card, .jumbotron, .navbar {
+    background: rgba(30, 30, 45, 0.45);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+/* --- 交互顺滑有手感：添加过渡动画 --- */
+.btn, a, .card {
+    transition: all 0.3s ease-in-out;
+}
+
+.btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px rgba(0, 123, 255, 0.5);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 123, 255, 0.4);
+}
+
+/* 美化问题标题链接 */
+.card-title a {
+    text-decoration: none;
+    color: #00aaff;
+}
+
+.card-title a:hover {
+    text-decoration: underline;
+    color: #4dc4ff;
+}

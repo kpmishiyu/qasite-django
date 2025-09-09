@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}我的主页{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mb-4">我的主页</h1>
+
+    <h2 class="mb-3"><i class="fa-solid fa-question-circle"></i> 我发布的问题</h2>
+    <div class="list-group mb-5">
+        {% for question in my_questions %}
+            <a href="{% url 'question_detail' pk=question.pk %}" class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">{{ question.title }}</h5>
+                    <small>{{ question.created_at|date:"Y-m-d" }}</small>
+                </div>
+                <p class="mb-1">悬赏: {{ question.bounty }} 金币 | 回答数: {{ question.answers.count }}</p>
+                <small>{% if question.is_resolved %} <span class="badge bg-success">已解决</span> {% else %} <span class="badge bg-warning">待解决</span> {% endif %}</small>
+            </a>
+        {% empty %}
+            <div class="list-group-item">你还没有发布过任何问题。</div>
+        {% endfor %}
+    </div>
+
+    <h2 class="mb-3"><i class="fa-solid fa-pen-nib"></i> 我回答的问题</h2>
+    <div class="list-group">
+        {% for answer in my_answers %}
+             <a href="{% url 'question_detail' pk=answer.question.pk %}" class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">回复: {{ answer.question.title }}</h5>
+                    <small>{{ answer.created_at|date:"Y-m-d" }}</small>
+                </div>
+                <p class="mb-1 text-muted"><em>"{{ answer.content|truncatewords:20 }}"</em></p>
+            </a>
+        {% empty %}
+             <div class="list-group-item">你还没有回答过任何问题。</div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
